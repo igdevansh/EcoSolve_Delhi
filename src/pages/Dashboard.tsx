@@ -38,32 +38,32 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-4 md:p-6 bg-gray-50 min-h-screen">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">EcoSolve Delhi Dashboard</h1>
-        <p className="text-gray-600">Monitor plastic waste management and sustainability metrics</p>
+        <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">EcoSolve Delhi Dashboard</h1>
+        <p className="text-gray-600 text-sm md:text-base">Monitor plastic waste management and sustainability metrics</p>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
         {statsData.map((stat, index) => (
           <StatCard key={index} {...stat} />
         ))}
       </div>
 
-      {/* Charts Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <Card className="shadow-sm hover:shadow-lg transition-shadow duration-300">
-          <CardHeader>
-            <CardTitle>Monthly Recycling Trends</CardTitle>
-            <CardDescription>Plastic waste recycled and diverted over time</CardDescription>
+      {/* Charts Grid - Updated for better mobile responsiveness */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
+        <Card className="shadow-sm hover:shadow-lg transition-shadow duration-300 hover:scale-[1.02] transform">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-lg md:text-xl">Monthly Recycling Trends</CardTitle>
+            <CardDescription className="text-sm">Plastic waste recycled and diverted over time</CardDescription>
           </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={monthlyData}>
+          <CardContent className="px-2 md:px-6">
+            <ResponsiveContainer width="100%" height={250} className="md:h-[300px]">
+              <BarChart data={monthlyData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
+                <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+                <YAxis tick={{ fontSize: 12 }} />
                 <Bar dataKey="recycled" fill="#22c55e" name="Recycled" />
                 <Bar dataKey="diverted" fill="#3b82f6" name="Diverted" />
               </BarChart>
@@ -71,22 +71,23 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        <Card className="shadow-sm hover:shadow-lg transition-shadow duration-300">
-          <CardHeader>
-            <CardTitle>Waste Type Distribution</CardTitle>
-            <CardDescription>Breakdown of plastic waste types processed</CardDescription>
+        <Card className="shadow-sm hover:shadow-lg transition-shadow duration-300 hover:scale-[1.02] transform">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-lg md:text-xl">Waste Type Distribution</CardTitle>
+            <CardDescription className="text-sm">Breakdown of plastic waste types processed</CardDescription>
           </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+          <CardContent className="px-2 md:px-6">
+            <ResponsiveContainer width="100%" height={250} className="md:h-[300px]">
               <PieChart>
                 <Pie
                   data={wasteTypeData}
                   cx="50%"
                   cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
+                  innerRadius={40}
+                  outerRadius={80}
                   dataKey="value"
                   label={({ name, value }) => `${name}: ${value}%`}
+                  labelStyle={{ fontSize: '12px' }}
                 >
                   {wasteTypeData.map((entry, index) => (
                     <Cell key={index} fill={entry.color} />
@@ -98,23 +99,23 @@ const Dashboard = () => {
         </Card>
       </div>
 
-      <Card className="shadow-sm hover:shadow-lg transition-shadow duration-300">
-        <CardHeader>
-          <CardTitle>Processing Efficiency Trends</CardTitle>
-          <CardDescription>Monthly efficiency percentage in waste processing</CardDescription>
+      <Card className="shadow-sm hover:shadow-lg transition-shadow duration-300 hover:scale-[1.02] transform">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg md:text-xl">Processing Efficiency Trends</CardTitle>
+          <CardDescription className="text-sm">Monthly efficiency percentage in waste processing</CardDescription>
         </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={trendData}>
+        <CardContent className="px-2 md:px-6">
+          <ResponsiveContainer width="100%" height={250} className="md:h-[300px]">
+            <LineChart data={trendData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
-              <YAxis domain={[70, 95]} />
+              <XAxis dataKey="month" tick={{ fontSize: 12 }} />
+              <YAxis domain={[70, 95]} tick={{ fontSize: 12 }} />
               <Line 
                 type="monotone" 
                 dataKey="efficiency" 
                 stroke="#22c55e" 
                 strokeWidth={3}
-                dot={{ fill: '#22c55e', r: 6 }}
+                dot={{ fill: '#22c55e', r: 4 }}
               />
             </LineChart>
           </ResponsiveContainer>
