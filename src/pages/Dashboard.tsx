@@ -1,155 +1,125 @@
-
 import React from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
+import { Recycle, Factory, Leaf, TrendingDown } from 'lucide-react';
 import StatCard from '../components/StatCard';
-import { Trash2, Recycle, Target, Lightbulb } from 'lucide-react';
-import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend } from 'recharts';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const Dashboard = () => {
-  const wasteTypeData = [
-    { name: 'PET', value: 35, color: '#22c55e' },
-    { name: 'HDPE', value: 25, color: '#84cc16' },
-    { name: 'PVC', value: 15, color: '#f97316' },
-    { name: 'LDPE', value: 15, color: '#3b82f6' },
-    { name: 'Other', value: 10, color: '#ef4444' }
+  const statsData = [
+    { title: 'Plastic Waste Recycled', value: '2,847', unit: 'tons', change: '+12% from last month', icon: Recycle, trend: 'up' as const },
+    { title: 'Manufacturing Units', value: '156', unit: 'active', change: '+5 new units', icon: Factory, trend: 'up' as const },
+    { title: 'Carbon Footprint Reduced', value: '1,234', unit: 'kg CO₂', change: '-18% this month', icon: Leaf, trend: 'down' as const },
+    { title: 'Waste Diverted', value: '89.2', unit: '%', change: '+3.2% improvement', icon: TrendingDown, trend: 'up' as const },
   ];
 
-  const progressData = [
-    { month: 'Jan', plasticSaved: 85, targetSaving: 80 },
-    { month: 'Feb', plasticSaved: 88, targetSaving: 85 },
-    { month: 'Mar', plasticSaved: 92, targetSaving: 90 },
-    { month: 'Apr', plasticSaved: 96, targetSaving: 92 },
-    { month: 'May', plasticSaved: 102, targetSaving: 95 },
-    { month: 'Jun', plasticSaved: 108, targetSaving: 98 }
+  const monthlyData = [
+    { name: 'Jan', recycled: 2400, diverted: 2100 },
+    { name: 'Feb', recycled: 2600, diverted: 2300 },
+    { name: 'Mar', recycled: 2800, diverted: 2500 },
+    { name: 'Apr', recycled: 2750, diverted: 2400 },
+    { name: 'May', recycled: 2900, diverted: 2600 },
+    { name: 'Jun', recycled: 2847, diverted: 2650 },
+  ];
+
+  const wasteTypeData = [
+    { name: 'PET Bottles', value: 35, color: '#22c55e' },
+    { name: 'HDPE', value: 25, color: '#3b82f6' },
+    { name: 'Packaging', value: 20, color: '#f59e0b' },
+    { name: 'Others', value: 20, color: '#ef4444' },
+  ];
+
+  const trendData = [
+    { month: 'Jan', efficiency: 78 },
+    { month: 'Feb', efficiency: 82 },
+    { month: 'Mar', efficiency: 85 },
+    { month: 'Apr', efficiency: 83 },
+    { month: 'May', efficiency: 88 },
+    { month: 'Jun', efficiency: 89 },
   ];
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800 mb-2">EcoSolve Delhi Dashboard</h1>
+        <p className="text-gray-600">Monitor plastic waste management and sustainability metrics</p>
       </div>
 
-      {/* Stats Cards */}
+      {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <StatCard
-          title="Delhi: Monthly Plastic Waste"
-          value="1237"
-          unit="kg"
-          change="+0% from last month"
-          icon={Trash2}
-          trend="up"
-        />
-        <StatCard
-          title="Delhi: Recycling Rate"
-          value="44.4"
-          unit="%"
-          change="+0.5% from last month"
-          icon={Recycle}
-          trend="up"
-        />
-        <StatCard
-          title="Delhi: Eco Initiatives"
-          value="18"
-          unit="projects"
-          change=""
-          icon={Lightbulb}
-          trend="up"
-        />
-        <StatCard
-          title="Delhi: Waste Reduction Goal"
-          value="60.9"
-          unit="% of target"
-          change=""
-          icon={Target}
-          trend="up"
-        />
+        {statsData.map((stat, index) => (
+          <StatCard key={index} {...stat} />
+        ))}
       </div>
 
-      {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Pie Chart */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">Delhi: Plastic Waste by Type</h3>
-            <p className="text-sm text-gray-600">Breakdown of commonly found plastic types in Delhi's waste.</p>
-          </div>
-          
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
+      {/* Charts Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <Card className="shadow-sm hover:shadow-lg transition-shadow duration-300">
+          <CardHeader>
+            <CardTitle>Monthly Recycling Trends</CardTitle>
+            <CardDescription>Plastic waste recycled and diverted over time</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={monthlyData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Bar dataKey="recycled" fill="#22c55e" name="Recycled" />
+                <Bar dataKey="diverted" fill="#3b82f6" name="Diverted" />
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        <Card className="shadow-sm hover:shadow-lg transition-shadow duration-300">
+          <CardHeader>
+            <CardTitle>Waste Type Distribution</CardTitle>
+            <CardDescription>Breakdown of plastic waste types processed</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
                   data={wasteTypeData}
                   cx="50%"
                   cy="50%"
                   innerRadius={60}
-                  outerRadius={120}
-                  paddingAngle={2}
+                  outerRadius={100}
                   dataKey="value"
+                  label={({ name, value }) => `${name}: ${value}%`}
                 >
                   {wasteTypeData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
+                    <Cell key={index} fill={entry.color} />
                   ))}
                 </Pie>
-                <Legend 
-                  verticalAlign="bottom" 
-                  height={36}
-                  iconType="circle"
-                  wrapperStyle={{ paddingTop: '20px' }}
-                />
               </PieChart>
             </ResponsiveContainer>
-          </div>
-        </div>
-
-        {/* Line Chart */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">Delhi: Waste Reduction Progress</h3>
-            <p className="text-sm text-gray-600">Monthly progress towards plastic waste reduction targets in Delhi (in kg).</p>
-          </div>
-          
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={progressData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis 
-                  dataKey="month" 
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fontSize: 12, fill: '#666' }}
-                />
-                <YAxis 
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fontSize: 12, fill: '#666' }}
-                  domain={[0, 120]}
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="plasticSaved" 
-                  stroke="#22c55e" 
-                  strokeWidth={3}
-                  dot={{ fill: '#22c55e', strokeWidth: 2, r: 4 }}
-                  name="Plastic Saved (kg)"
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="targetSaving" 
-                  stroke="#84cc16" 
-                  strokeWidth={2}
-                  strokeDasharray="5 5"
-                  dot={{ fill: '#84cc16', strokeWidth: 2, r: 4 }}
-                  name="Target Saving (kg)"
-                />
-                <Legend 
-                  verticalAlign="bottom" 
-                  height={36}
-                  wrapperStyle={{ paddingTop: '20px' }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
+
+      <Card className="shadow-sm hover:shadow-lg transition-shadow duration-300">
+        <CardHeader>
+          <CardTitle>Processing Efficiency Trends</CardTitle>
+          <CardDescription>Monthly efficiency percentage in waste processing</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={trendData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis domain={[70, 95]} />
+              <Line 
+                type="monotone" 
+                dataKey="efficiency" 
+                stroke="#22c55e" 
+                strokeWidth={3}
+                dot={{ fill: '#22c55e', r: 6 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
     </div>
   );
 };

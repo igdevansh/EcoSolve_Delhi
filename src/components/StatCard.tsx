@@ -13,7 +13,7 @@ interface StatCardProps {
 
 const StatCard: React.FC<StatCardProps> = ({ title, value, unit, change, icon: Icon, trend }) => {
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+    <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm hover:shadow-lg transition-shadow duration-300 hover:scale-[1.02] transform">
       <div className="flex items-center justify-between mb-4">
         <span className="text-sm font-medium text-gray-600">{title}</span>
         <Icon className="w-5 h-5 text-gray-400" />
