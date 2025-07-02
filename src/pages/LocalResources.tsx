@@ -1,38 +1,9 @@
 
 import React from 'react';
 import { Phone, Globe, Clock } from 'lucide-react';
+import { mockResources } from '../data/mockResources';
 
 const LocalResources = () => {
-  const resources = [
-    {
-      name: 'Goonj Dropping Centre – Mayur Vihar Phase 2',
-      type: 'Recycling Center',
-      description: 'Accepts clothes, paper, and household materials for reuse and recycling.',
-      address: '277, Pocket C, Mayur Vihar Phase 2, Delhi 110091',
-      hours: 'Mon–Sat: 11 AM–4 PM; Sun: 8 AM–11 AM',
-      hasCall: true,
-      hasWebsite: false
-    },
-    {
-      name: 'JAAGRUTI – Waste Paper Recycling Services',
-      type: 'Recycling Center',
-      description: 'Offers waste paper recycling services for organizations and individuals. Email: paper@we-recycle.org.',
-      address: 'Contact for address',
-      hours: null,
-      hasCall: true,
-      hasWebsite: true
-    },
-    {
-      name: 'Pom Pom',
-      type: 'Recycling Center',
-      description: '',
-      address: '',
-      hours: null,
-      hasCall: false,
-      hasWebsite: false
-    }
-  ];
-
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <div className="mb-6">
@@ -41,7 +12,7 @@ const LocalResources = () => {
       </div>
 
       <div className="space-y-6">
-        {resources.map((resource, index) => (
+        {mockResources.map((resource, index) => (
           <div key={index} className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
             <div className="flex items-start gap-4">
               <div className="p-2 bg-green-100 rounded-lg">
@@ -79,14 +50,14 @@ const LocalResources = () => {
                 )}
                 
                 <div className="flex gap-3">
-                  {resource.hasCall && (
+                  {resource.phone && (
                     <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
                       <Phone className="w-4 h-4" />
                       Call
                     </button>
                   )}
                   
-                  {resource.hasWebsite && (
+                  {resource.website && (
                     <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
                       <Globe className="w-4 h-4" />
                       Website
