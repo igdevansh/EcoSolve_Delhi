@@ -5,9 +5,8 @@
     <title>Redirecting...</title>
     <meta http-equiv="refresh" content="0; url=/EcoSolve_Delhi/" />
     <script>
-      // For non-root routes, preserve path
-      const redirectPath = window.location.pathname.replace(/^\/EcoSolve_Delhi/, '');
-      window.location.replace("/EcoSolve_Delhi/" + redirectPath);
+      const redirectPath = window.location.pathname + window.location.search + window.location.hash;
+      window.location.replace("/EcoSolve_Delhi/" + redirectPath.replace(/^\/EcoSolve_Delhi/, ""));
     </script>
   </head>
   <body>
