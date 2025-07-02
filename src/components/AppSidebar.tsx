@@ -17,7 +17,7 @@ import {
 
 const AppSidebar = () => {
   const location = useLocation();
-  const { state } = useSidebar();
+  const { state, isMobile } = useSidebar();
   const isCollapsed = state === "collapsed";
 
   const navItems = [
@@ -31,7 +31,7 @@ const AppSidebar = () => {
       <SidebarHeader>
         <div className="flex items-center gap-2 px-2">
           <Leaf className="w-6 h-6 text-green-600" />
-          {!isCollapsed && (
+          {(!isCollapsed || isMobile) && (
             <span className="text-lg font-semibold text-gray-800">EcoSolve</span>
           )}
         </div>
@@ -50,7 +50,7 @@ const AppSidebar = () => {
                     <SidebarMenuButton asChild isActive={isActive}>
                       <NavLink to={item.path}>
                         <Icon className="w-4 h-4" />
-                        {!isCollapsed && <span>{item.label}</span>}
+                        {(!isCollapsed || isMobile) && <span>{item.label}</span>}
                       </NavLink>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
